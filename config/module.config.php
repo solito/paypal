@@ -3,6 +3,7 @@ return array(
   'paypal' => array(
           //Account credentials
           'Account' => array(
+          	  // Examples	
               'acct1.UserName'  => 'platfo_1255077030_biz_api1.gmail.com',
               'acct1.Password'  => 1255077037,
               'acct1.Signature' => 'Abg0gYcQyxQvnf2HDJkKtA-p6pqhA1k-KTYE0Gcy1diujFio4io5Vqjf',
@@ -34,6 +35,15 @@ return array(
               'log.FileName'   => 'PayPal.log',
               'log.LogLevel'   => 'Debug',
               'log.LogEnabled' => true
-          )        
+         ),
+         'wps_toolkit' => array(         
+  		      'privateKey'             => '',
+  		      'privateKeyPassword'     => '',
+  		      'certificate'            => '',
+  		      'certificateId'          => '',
+  		      'paypalCertificate'      => '',
+              'environment'            => '',
+              'userName'               => '',                   
+  		  ),
       )
 );

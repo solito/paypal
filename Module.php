@@ -7,7 +7,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace ZendSkeletonModule;
+namespace PayPal;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
@@ -41,5 +41,45 @@ class Module implements AutoloaderProviderInterface
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+        
+        $app = $e->getParam('application');
+        $locator = $app->getServiceManager();;
+        
+        // Inject a zf2 style configuration into the PayPayl ConfigManager
+        $config = $locator->get('config');
+        $config = $config['paypal'];
+        
+        $paypalConfig = \PPConfigManager::getInstance();
+        $reflection = new \ReflectionObject($paypalConfig);
+        $configProperty = $reflection->getProperty('config');
+        $configProperty->setAccessible(true);
+        $configProperty->setValue($paypalConfig, $config);
+    }
+    
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'wps_toolkit' => function ($sm) {
+                    $config = $sm->get('config');
+                    $config = $config['paypal']['wps_toolkit'];
+                    $wpsToolkit = new \PayPal\Service\WPSToolkit($config); 
+                    return $wpsToolkit;
+                },
+            ),    
+        );
+    }
+    
+    public function getViewHelperConfig()
+    {
+        return array(
+            'factories' => array(
+                'paypalButton' => function ($sm) {
+                    return new \PayPal\View\Helper\PayPalButton(
+                        $sm->getServiceLocator()->get('wps_toolkit', false)
+                    );
+                },
+            ),
+        );
     }
 }
