@@ -41,21 +41,21 @@ class Module implements AutoloaderProviderInterface
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-        
+
         $app = $e->getParam('application');
         $locator = $app->getServiceManager();;
-        
+
         // Inject a zf2 style configuration into the PayPayl ConfigManager
         $config = $locator->get('config');
         $config = $config['paypal'];
-        
+
         $paypalConfig = \PPConfigManager::getInstance();
         $reflection = new \ReflectionObject($paypalConfig);
         $configProperty = $reflection->getProperty('config');
         $configProperty->setAccessible(true);
         $configProperty->setValue($paypalConfig, $config);
     }
-    
+
     public function getServiceConfig()
     {
         return array(
@@ -63,13 +63,19 @@ class Module implements AutoloaderProviderInterface
                 'wps_toolkit' => function ($sm) {
                     $config = $sm->get('config');
                     $config = $config['paypal']['wps_toolkit'];
-                    $wpsToolkit = new \PayPal\Service\WPSToolkit($config); 
+                    $wpsToolkit = new \PayPal\Service\WPSToolkit($config);
                     return $wpsToolkit;
                 },
-            ),    
+                'ipn' => function ($sm) {
+                    $config = $sm->get('config');
+                    $config = $config['paypal']['wps_toolkit'];
+                    $wpsToolkit = new \PayPal\Service\IPN($config);
+                    return $wpsToolkit;
+                },
+            ),
         );
     }
-    
+
     public function getViewHelperConfig()
     {
         return array(

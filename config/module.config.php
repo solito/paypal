@@ -3,12 +3,12 @@ return array(
   'paypal' => array(
           //Account credentials
           'Account' => array(
-          	  // Examples	
+          	  // Examples
               'acct1.UserName'  => 'platfo_1255077030_biz_api1.gmail.com',
               'acct1.Password'  => 1255077037,
               'acct1.Signature' => 'Abg0gYcQyxQvnf2HDJkKtA-p6pqhA1k-KTYE0Gcy1diujFio4io5Vqjf',
               'acct1.AppId'     => 'APP-80W284485P519543T',
-              
+
               'acct2.UserName'  => 'suarumugam-biz_api1.paypal.com',
               'acct2.Password'  => 'N6WUWNG3AESQUSXB',
               'acct2.CertKey'   => 'KJAERUGBLVF6Y',
@@ -36,14 +36,16 @@ return array(
               'log.LogLevel'   => 'Debug',
               'log.LogEnabled' => true
          ),
-         'wps_toolkit' => array(         
+         'wps_toolkit' => array(
   		      'privateKey'             => '',
   		      'privateKeyPassword'     => '',
   		      'certificate'            => '',
   		      'certificateId'          => '',
   		      'paypalCertificate'      => '',
               'environment'            => '',
-              'userName'               => '',                   
+              'userName'               => '',
+              'cacert'                 => '',
+              'ipnURL'                 => '',
   		  ),
       )
 );
