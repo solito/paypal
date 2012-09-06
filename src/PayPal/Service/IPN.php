@@ -48,7 +48,12 @@ class IPN
 
     public function verifyReceiver($data)
     {
-
+        if (array_key_exists('receiver_email', $data)) {
+            if ($this->userName == $this->userName) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
