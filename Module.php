@@ -85,6 +85,11 @@ class Module implements AutoloaderProviderInterface
                         $sm->getServiceLocator()->get('wps_toolkit', false)
                     );
                 },
+                'paypal' => function ($sm) {
+                    $config = $sm->getServiceLocator()->get('config');
+                    $config = $config['paypal'];
+                    return new \PayPal\View\Helper\PayPal($config);
+                },
             ),
         );
     }
