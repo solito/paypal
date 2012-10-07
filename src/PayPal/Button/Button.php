@@ -253,7 +253,7 @@ class Button
      * @throws \InvalidArgumentException
      * @return \PayPal\Button\Button
      */
-    public function setReturnURL($url, $method = null)
+    public function setReturnURL($url, $method = 'GET')
     {
         $allowedMethods = array (
             1 => 'GET',
