@@ -139,6 +139,8 @@ class Button
     /**
      * Description of the item. If omitted, buyers enter their own name.
      *
+     * Sets the item_name button variable.
+     *
      * @param string $name
      * @return \PayPal\Button\Button
      */
@@ -156,6 +158,8 @@ class Button
      * Pass-through variable. The value you specify is passed back to you upon
      * payment completion. Required if to track inventory or track profit and
      * loss for the item the button sells on Paypal.
+     *
+     * Sets the item_number button variable.
      *
      * @param string $number
      * @throws \InvalidArgumentException
@@ -175,6 +179,8 @@ class Button
     /**
      * Set the quantity.
      *
+     * Sets the quantity button variable.
+     *
      * @param integer $quantity
      * @return \PayPal\Button\Button
      */
@@ -191,6 +197,8 @@ class Button
 
     /**
      * Pass-through variable fortracking purposes, which buyers do not see.
+     *
+     * Sets the custom button variable.
      *
      * @param string $custom
      * @throws \InvalidArgumentException
@@ -210,6 +218,8 @@ class Button
     /**
      * Pass-through variable fortracking purposes.
      *
+     * Sets the invoice button variable.
+     *
      * @param string $invoice
      * @throws \InvalidArgumentException
      * @return \PayPal\Button\Button
@@ -227,6 +237,8 @@ class Button
 
     /**
      * Set the currency code.
+     *
+     * Sets the currency_code button variable.
      *
      * @param string $currencyCode
      * @throws \InvalidArgumentException
@@ -247,6 +259,8 @@ class Button
      *
      * Allowed optional methods are GET and POST. If no method is set GET
      * is used an no payment data is transmitted.
+     *
+     * Sets the rm button variable.
      *
      * @param string $url
      * @param string $method
@@ -274,7 +288,30 @@ class Button
     }
 
     /**
+     * Sets the text displayed on the return button.
+     *
+     * Sets the cbn button variable.
+     *
+     * @param strung $text
+     * @throws \InvalidArgumentException
+     * @return \PayPal\Button\Button
+     */
+    public function setReturnButtonText($text)
+    {
+        if (strlen($text) > 60 ) {
+            throw new \InvalidArgumentException(
+                'The given return button text must not exeed 60 characters.'
+            );
+        }
+
+        $this->setParam('cbt', $text);
+        return $this;
+    }
+
+    /**
      * Sets the URL the user is returned to when payment was canceled.
+     *
+     * Sets the cancel_return button variable.
      *
      * @param string $url
      * @return \PayPal\Button\Button
