@@ -11,6 +11,7 @@ namespace PayPal;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
+use Zend\Mvc\MvcEvent;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -36,59 +37,29 @@ class Module implements AutoloaderProviderInterface
 
     public function onBootstrap($e)
     {
-        // You may not need to do this if you're doing it elsewhere in your
-        // application
-        $eventManager        = $e->getApplication()->getEventManager();
-        $moduleRouteListener = new ModuleRouteListener();
-        $moduleRouteListener->attach($eventManager);
-
         $app = $e->getParam('application');
-        $locator = $app->getServiceManager();;
 
-        // Inject a zf2 style configuration into the PayPayl ConfigManager
-        $config = $locator->get('config');
-        $config = $config['paypal'];
-
-        $paypalConfig = \PPConfigManager::getInstance();
-        $reflection = new \ReflectionObject($paypalConfig);
-        $configProperty = $reflection->getProperty('config');
-        $configProperty->setAccessible(true);
-        $configProperty->setValue($paypalConfig, $config);
-    }
-
-    public function getServiceConfig()
-    {
-        return array(
-            'factories' => array(
-                'wps_toolkit' => function ($sm) {
-                    $config = $sm->get('config');
-                    $config = $config['paypal']['wps_toolkit'];
-                    $wpsToolkit = new \PayPal\Service\WPSToolkit($config);
-                    return $wpsToolkit;
-                },
-                'ipn' => function ($sm) {
-                    $config = $sm->get('config');
-                    $config = $config['paypal']['wps_toolkit'];
-                    $wpsToolkit = new \PayPal\Service\IPN($config);
-                    return $wpsToolkit;
-                },
-            ),
-        );
+        $em  = $app->getEventManager()->getSharedManager();
+        $sm  = $app->getServiceManager();
+      
+        $em->attach(__NAMESPACE__, MvcEvent::EVENT_DISPATCH, function($e) use ($sm) {
+            $strategy = $sm->get('ViewJsonStrategy');
+            $view     = $sm->get('ViewManager')->getView();
+            $strategy->attach($view->getEventManager());
+        });
     }
 
     public function getViewHelperConfig()
     {
         return array(
             'factories' => array(
-                'paypalButton' => function ($sm) {
-                    return new \PayPal\View\Helper\PayPalButton(
-                        $sm->getServiceLocator()->get('wps_toolkit', false)
-                    );
-                },
                 'paypal' => function ($sm) {
                     $config = $sm->getServiceLocator()->get('config');
                     $config = $config['paypal'];
                     return new \PayPal\View\Helper\PayPal($config);
+                },
+                'paypalJsButton' => function ($sm) {
+                	return new \PayPal\View\Helper\JsButton();
                 },
             ),
         );
