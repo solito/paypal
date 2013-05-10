@@ -39,32 +39,51 @@ class JsButton extends AbstractHtmlElement implements TranslatorAwareInterface
 	        $data = $data->getParams();
 	    }
 
-	    $data['env'] = 'sandbox';
+	    if (isset($data['unsubscribe'])) {
+	        if ($data['unsubscribe'] == true) {
+	            return $this->createCancleSubscriptionButton($data);
+	        }
+	        unset($data['unsubscribe']);
+	        unset($data['unsubscribeText']);
+	    }
 	    
+	    return $this->createStandardButton($data);
+	    
+	}
+	
+	public function createCancleSubscriptionButton($data)
+	{
+	    $uri = 'https://www.paypal.com/cgi-bin/webscr—cmd=_subscr-find&alias=';
+	    $uri .= urlencode($data['business']);
+	    return '<a class="unsubscribe" href="' . $uri . '">' . $data['unsubscribeText'] . '</a>';
+	}
+	
+	public function createStandardButton(array $data) 
+	{
 	    $data = $this->convertCommand($data);
-	    
+	     
 	    if (isset($data['business'])) {
 	        $business = $data['business'];
 	    } else {
 	        throw new \RuntimeException('Business is not set.');
 	    }
-	    
+	     
 	    if ($this->hasTranslator()) {
 	        //$locale = $this->getTranslator()->getLocale();
 	        //$data['locale'] = $locale;
 	        //$data['lc'] = $locale;
 	    }
+	     
+	    foreach ($data as $key => $value) {
+	        $newData['data-' . $key] = $value;
+	    }
 	    
-		foreach ($data as $key => $value) {
-			$newData['data-' . $key] = $value;
-		}
-		
-		$newData['src'] = $this->getJsPath() . '?merchant=' . $business;
-		
-
-		$return = '<script' . $this->htmlAttribs($newData);
-		$return .= $this->getClosingBracket() . '</script>';
-		return $return;
+	    $newData['src'] = $this->getJsPath() . '?merchant=' . $business;
+	    
+	    
+	    $return = '<script' . $this->htmlAttribs($newData);
+	    $return .= $this->getClosingBracket() . '</script>';
+	    return $return;
 	}
 	
 	protected function convertCommand($data)

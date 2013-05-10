@@ -38,12 +38,16 @@ class IpnController extends AbstractRestfulController implements LoggerAwareInte
 	
     public function getList()
     {
-        //$response = $this->getResponse();
-        //$response->setStatusCode(404);
-        //$response->send();
-        //return $this->forward()->dispatch('error', array('action' => 'notFound'));
         
+        $response = $this->getResponse();
+        $response->setStatusCode(404);
+        $response->send();
+        return array();
+        /*
         $ipn = array(
+            "txn_type" =>"subscr_payment",
+            'subscr_id' => 'someId',
+            "txn_id"=>"9W87459183924521Y",
             "mc_gross"=>"6.99",
             "protection_eligibility"=>"Ineligible",
             "address_status"=>"unconfirmed",
@@ -51,15 +55,15 @@ class IpnController extends AbstractRestfulController implements LoggerAwareInte
             "tax"=>"0.00",
             "address_street"=>"ESpachstr. 1",
             "payment_date"=>"11=>02=>37 Oct 04, 2012 PDT",
-            //"payment_status"=>"Pending",
-            "payment_status"=>"Refunded",
+            "payment_status"=>"Pending",
+            //"payment_status"=>"Refunded",
             "charset"=>"windows-1252",
             "address_zip"=>"79111",
             "first_name"=>"Thomas",
             "address_country_code"=>"DE",
             "address_name"=>"Thomas Lhotta",
             "notify_version"=>"3.7",
-            "custom"=>"1-1",
+            "custom"=>"803-1",
             "payer_status"=>"verified",
             "business"=>"office@dailyhealthcoach.net",
             "address_country"=>"Germany",
@@ -67,13 +71,11 @@ class IpnController extends AbstractRestfulController implements LoggerAwareInte
             "quantity"=>"1",
             "verify_sign"=>"AiGz.4HIRlBadusZbp9-iF8lvXjKAmyb1DpRM0UPcOKg17uaf8evG5BA",
             "payer_email"=>"lhotta_1345635459_pre@dailyhealthcoach.net",
-            "txn_id"=>"9W87459183924521B",
             "payment_type"=>"instant",
             "last_name"=>"Lhotta",
             "address_state"=>"Empty",
             "receiver_email"=>"office@dailyhealthcoach.net",
             "pending_reason"=>"unilateral",
-            "txn_type"=>"web_accept",
             "item_name"=>"3 Monate",
             "mc_currency"=>"EUR",
             "item_number"=>"",
@@ -90,12 +92,15 @@ class IpnController extends AbstractRestfulController implements LoggerAwareInte
         $return = $this->create($ipn);
 
         return $return;
-        
+        */
     }
 
     public function get($id)
     {
-        return $this->forward()->dispatch('error', array('action' => 'notFound'));
+        $response = $this->getResponse();
+        $response->setStatusCode(404);
+        $response->send();
+        return array();
     }
 
     public function create($data)

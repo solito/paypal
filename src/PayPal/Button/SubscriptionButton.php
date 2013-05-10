@@ -39,5 +39,11 @@ class SubscriptionButton extends AbstractButton
     {
         return $this->setParam('p3', $duration);
     }
+    
+    public function setUnsubscribe($text, $flag = true)
+    {
+        $this->setParam('unsubscribe', true);   
+        return $this->setParam('unsubscribeText', $text);
+    } 
 
 }

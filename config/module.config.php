@@ -21,13 +21,15 @@ return array(
     'router' => array(
         'routes' => array(
             'ipn' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'type' => 'Literal',
+                'priority' => 1000,
                 'options' => array(
-                    'route'    => '/ipn',
+                    'route' => '/ipn',
                     'defaults' => array(
                         'controller' => 'ipn',
                     ),
                 ),
+                'may_terminate' => true,
             ),
          ),
     ),
