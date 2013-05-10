@@ -121,7 +121,7 @@ class IpnController extends AbstractRestfulController implements LoggerAwareInte
             
         	// Check if the message has originated form PayPal.
         	// If not log.
-        	/*if ($ipn->verifyIPNMessage($data) !== true) {
+        	if ($ipn->verifyIPNMessage($data) !== true) {
         		throw new IpnException('Unverified IPN message received');
         	}
         	
@@ -129,7 +129,7 @@ class IpnController extends AbstractRestfulController implements LoggerAwareInte
         	if ($ipn->verifyReceiver($data) !== true) {
         		throw new IpnException('Received IPN with wrong receiver email.');
         	}
-        	*/
+        	
         	
         	$this->getEventManager()->trigger(
         			'processIpn',
