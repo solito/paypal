@@ -1,0 +1,35 @@
+{
+    "name":         "solito/paypal",
+    "description":  "A zf2 paypal module",
+    "type":         "library",
+    "homepage":     "https://github.com/solito/paypal",
+    "keywords": [
+        "zf2",
+        "acl",
+        "zfc-user"
+    ],
+    "authors": [
+        {
+            "name":      "Thomas Lhotta",
+            "email":     "th.lhotta@gmail.com",
+            "role":      "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zend-permissions-acl": "~2.1",
+        "zendframework/zend-mvc":             "~2.1",
+        "zendframework/zend-eventmanager":    "~2.1",
+        "zendframework/zend-servicemanager":  "~2.1",
+        "zendframework/zend-view":            "~2.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit":                    "~3.7",
+    },
+    "autoload": {
+        "psr-0": {
+            "Paypal\\": "src/"
+        }
+    }
+}
