@@ -19,7 +19,7 @@ class SubscriptionButton extends AbstractButton
      */
     protected $params = array(
         'cmd' => '_xclick-subscriptions',
-        't3' => 'D'
+        'src' => '1',
     );
 
 
@@ -35,15 +35,42 @@ class SubscriptionButton extends AbstractButton
         return $this->setParam('a3', $amount);
     }
     
-    public function setDuration($duration)
+    /**
+     * Set the interval at which the payments should occur according to the
+     * given unit. The default unit is days.
+     * 
+     * @param integer $duration
+     * @return \PayPal\Button\SubscriptionButton
+     */
+    public function setDuration($duration, $unit = 'D')
     {
+        $this->setParam('t3', $unit);
         return $this->setParam('p3', $duration);
     }
     
+    /**
+     * Set the text to be displayed in the unsubscribe button.
+     * 
+     * @param string $text
+     * @param string $flag
+     * @return \PayPal\Button\SubscriptionButton
+     */
     public function setUnsubscribe($text, $flag = true)
     {
         $this->setParam('unsubscribe', true);   
         return $this->setParam('unsubscribeText', $text);
     } 
+    
+    /**
+     * Set the number of cycles after which the subscription expires.
+     * 
+     * Default is never
+     * 
+     * @param integer $recurrences
+     */
+    public function setRecurrences($recurrences)
+    {
+        return $this->setParam('srt', $recurrences);
+    }
 
 }

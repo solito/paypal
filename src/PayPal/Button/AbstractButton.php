@@ -89,6 +89,18 @@ abstract class AbstractButton
     }
     
     /**
+     * Removes a parameter.
+     * 
+     * @param string $name
+     * @return \PayPal\Button\AbstractButton
+     */
+    public function removeParam($name)
+    {
+        unset($this->params[$name]);
+        return $this;
+    }
+    
+    /**
      * Set the button type.
      *
      * @param string $cmd
@@ -286,7 +298,6 @@ abstract class AbstractButton
         }
 
 
-        $this->setParam('rm', $method);
         return $this->setParam('return', $url);
     }
 

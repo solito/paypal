@@ -4,7 +4,7 @@ namespace PayPal\Button;
 /**
  * Class representation of a paypal button.
  *
- * See https://cms.paypal.com/uk/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_html_Appx_websitestandard_htmlvariables
+ * See https://developer.paypal.com/webapps/developer/docs/classic/paypal-payments-standard/integration-guide/Appx_websitestandard_htmlvariables/
  * for variables
  *
  * @author Thomas Lhotta
